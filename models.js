@@ -15,7 +15,15 @@ const blogSchema = mongoose.Schema({
     }
 });
 
-blogSchema.virtual('fullName').get(function{}
+blogSchema.virtual('fullName').get(function(){}
     //mongoose will access "fullName property anytime fullName is called"
     return bloSchema.author.firstName + ' ' + blogSchema.author.lastName;
 });
+
+blogSchema.methods.apiReturn = function(){
+    return {
+        title: this.title,
+        content: this.content,
+        author: this.fullName
+    };
+}
