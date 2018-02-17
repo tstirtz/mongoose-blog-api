@@ -3,7 +3,7 @@
 let mongoose = require('mongoose');
 
 
-let blogSchema = mongoose.Schema({
+const blogSchema = mongoose.Schema({
     //title
     title: String,
     //content
@@ -13,4 +13,9 @@ let blogSchema = mongoose.Schema({
         firstName: String,
         lastName: String
     }
+});
+
+blogSchema.virtual('fullName').get(function{}
+    //mongoose will access "fullName property anytime fullName is called"
+    return bloSchema.author.firstName + ' ' + blogSchema.author.lastName;
 });
