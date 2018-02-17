@@ -27,3 +27,7 @@ blogSchema.methods.apiReturn = function(){
         author: this.fullName
     };
 }
+
+const BlogPost = mongoose.model('BlogPost', blogSchema);
+
+model.export = {BlogPost};
