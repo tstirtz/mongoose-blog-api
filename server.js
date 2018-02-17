@@ -9,6 +9,8 @@ const app = express();
 app.use(bodyParser.json());
 mongoose.connect(DATABASE_URL);
 
+mongoose.Promise = global.Promise;
+
 app.get('/blog-posts', function(req, res){
     BlogPost
     .find()
