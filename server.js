@@ -1,13 +1,26 @@
 'use strict';
-let mongoose = require('mongoose');
-let bodyParser = require('body-parser');
-let express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const express = require('express');
+const {BlogPost} = require('./models');
+const {DATABASE_URL} = require('./config');
 
-let app = express();
+const app = express();
+app.use(bodyParser.json());
+mongoose.connect(DATABASE_URL);
 
+app.get('/blog-posts', function(req, res){
+    BlogPost
+    .find()
+    .limit(10)
+    .then(function(blogPosts){
+        res.json(blogPosts);
+    })
+    .catch(function(err){
+        console.log(err);
+        res.status(500).send("Internal server error");
+    });
 
-app.get('/', function(req, res){
-    res.send("Hello World");
 });
 
 app.listen(8000, function(){
