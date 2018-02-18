@@ -1,6 +1,6 @@
 'use strict';
 
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 
 const blogSchema = mongoose.Schema({
