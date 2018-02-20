@@ -16,12 +16,9 @@ mongoose.Promise = global.Promise;
 
 app.get('/posts', function(req, res){
     blogPost
-    .find({}, function(err, blogPosts){
-        if(err){
-            res.send(err);
-        }
-        console.log(blogPosts);
-        res.json(blogPosts);
+    .find()
+    .then(function(posts){
+        res.json(posts);
     });
 //     .then(posts => {
 //   res.json({
@@ -35,6 +32,7 @@ app.get('/posts', function(req, res){
 //     });
 
 });
+
 
 let server;
 
