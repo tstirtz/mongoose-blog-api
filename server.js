@@ -2,10 +2,10 @@
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const express = require('express');
-const {BlogPost} = require('./models');
+const {blogPost} = require('./models');
 const {DATABASE_URL, PORT} = require('./config');
 
-const app = express();
+let app = express();
 app.use(bodyParser.json());
 
 
@@ -14,13 +14,14 @@ mongoose.Promise = global.Promise;
 //still trying to get a GET request to send back test data
 
 
-app.get('/blog-posts', function(req, res){
-    BlogPost
-    .find({}, function(err, posts){
+app.get('/posts', function(req, res){
+    blogPost
+    .find({}, function(err, blogPosts){
         if(err){
             res.send(err);
         }
-        res.json(posts);
+        console.log(blogPosts);
+        res.json(blogPosts);
     });
 //     .then(posts => {
 //   res.json({
@@ -50,6 +51,20 @@ function runServer(dataBaseUrl, port=PORT){
             .on('error', err => {
                 mongoose.disconnect();
                 reject(err);
+            });
+        });
+    });
+}
+
+function closeServer(){
+    return mongoose.disconnect().then(() =>{
+        return new Promise((resolve, reject) => {
+            console.log('Closing server');
+            server.close(err=>{
+                if(err){
+                    return reject(err);
+                }
+                resolve();
             });
         });
     });
