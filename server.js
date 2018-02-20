@@ -27,12 +27,20 @@ app.get('/posts', function(req, res){
     })
     .catch(function(err){
         console.log(err);
-        res.status(500).json(message: "Internal server error");
+        res.status(500).json({message: "Internal server error"});
     })
 });
 
 app.get('/posts/:id', function(req, res){
-
+    blogPost
+    .findById(req.params.id)
+    .then(function(posts){  //pass result of findById to promise and send it back to client in res.json
+        res.json(posts);
+    })
+    .catch(function(err){
+        console.log(err);
+        res.status(500).json({message: "Internal server error"});
+    })
 });
 
 
