@@ -17,14 +17,16 @@ const blogSchema = mongoose.Schema({
 
 blogSchema.virtual('fullName').get(function(){
     //mongoose will access "fullName property anytime fullName is called"
-    return bloSchema.author.firstName + ' ' + blogSchema.author.lastName;
+    const auth = this.author;
+    return `${auth.firstName} ${auth.lastName}`;
 });
 
 blogSchema.methods.apiReturn = function(){
+    console.log(this);
     return {
+        author: this.fullName,
         title: this.title,
-        content: this.content,
-        author: this.fullName
+        content: this.content
     };
 }
 

@@ -18,19 +18,13 @@ app.get('/posts', function(req, res){
     blogPost
     .find()
     .then(function(posts){
-        res.json(posts);
+        res.json(
+            posts.map(post => {
+                return post.apiReturn();
+            })
+    );
+        // res.json(posts);
     });
-//     .then(posts => {
-//   res.json({
-//     posts: posts.map(
-//       (post) => post.apiReturn())
-//   });
-// })
-//     .catch(function(err){
-//         console.log(err);
-//         res.status(500).send("Internal server error");
-//     });
-
 });
 
 
