@@ -23,8 +23,16 @@ app.get('/posts', function(req, res){
                 return post.apiReturn();
             })
     );
-        // res.json(posts);
-    });
+
+    })
+    .catch(function(err){
+        console.log(err);
+        res.status(500).json(message: "Internal server error");
+    })
+});
+
+app.get('/posts/:id', function(req, res){
+
 });
 
 
