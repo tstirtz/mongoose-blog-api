@@ -43,6 +43,18 @@ app.get('/posts/:id', function(req, res){
     })
 });
 
+app.post('/posts', function(req, res){
+    blogPost
+    .create(req.body) //find update method for mongoose
+    .then(function(newPost){
+        res.json(newPost); //send client back created object
+    })
+    .catch(function(err){
+        console.log(err);
+        res.status(500).json({message: "Internal server error"})
+    })
+});
+
 
 let server;
 
