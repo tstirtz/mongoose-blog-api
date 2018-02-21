@@ -69,16 +69,6 @@ app.post('/posts', function(req, res){
 });
 
 app.put('/posts/:id', function(req, res){
-    //check that one of required fields is present
-        //if not return 400 status
-    //check that params id and body id match
-        //if not return 400 status
-    // const requiredFields = ['author', 'title', 'content'];
-    // for(let i= 0; i < requiredFields.length; i++){
-    //     if(!('id' && i in req.body)){
-    //         res.status(400).json({message: `request does not contain ${requiredFields[i]}`});
-    //     }
-    // }
     if(req.params.id !== req.body.id){
         res.status(400).json({message: `${req.params.id} and ${req.body.id} must match`});
     }
@@ -102,6 +92,22 @@ app.put('/posts/:id', function(req, res){
     });
 
 });
+
+app.delete('/posts/:id', function(req, res){
+    //delete item by id
+    blogPost
+    .findByIdAndRemove(req.params.id)
+    .then(function(deleted){
+        console.log(deleted);
+        console.log(`${req.params.id} was deleted`);
+        res.status(204).end();
+    })
+    .catch(function(err){
+        console.log(err);
+        res.status(500).json({message: "Internal server error"});
+    });
+});
+
 
 
 let server;
