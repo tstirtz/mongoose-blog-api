@@ -68,6 +68,41 @@ app.post('/posts', function(req, res){
     })
 });
 
+app.put('/posts/:id', function(req, res){
+    //check that one of required fields is present
+        //if not return 400 status
+    //check that params id and body id match
+        //if not return 400 status
+    // const requiredFields = ['author', 'title', 'content'];
+    // for(let i= 0; i < requiredFields.length; i++){
+    //     if(!('id' && i in req.body)){
+    //         res.status(400).json({message: `request does not contain ${requiredFields[i]}`});
+    //     }
+    // }
+    if(req.params.id !== req.body.id){
+        res.status(400).json({message: `${req.params.id} and ${req.body.id} must match`});
+    }
+    let toUpdate = {};
+    const updateableFields = ['author', 'title', 'content'];
+    updateableFields.forEach(function(field){
+        if(field in req.body){
+            toUpdate[field] = req.body[field];
+        }
+    });
+    console.log(toUpdate);
+
+    blogPost
+    .findByIdAndUpdate(req.params.id, {$set: toUpdate})//use req.params.id instead of req.body.id
+    .then(function(updatedPost){
+        res.status(200).json(updatedPost);
+    })
+    .catch(function(err){
+        console.log(err);
+        res.status(500).json({message: "Internal server error"});
+    });
+
+});
+
 
 let server;
 
