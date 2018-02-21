@@ -44,10 +44,23 @@ app.get('/posts/:id', function(req, res){
 });
 
 app.post('/posts', function(req, res){
+    //Need to require author in the form of first and last same or
+    //split the fullName into first and last names
+    const requiredFields = ['author', 'title', 'content'];
+    for(let i = 0; i < requiredFields.length; i++){
+        if(!(requiredFields[i] in req.body)){
+            res.status(400).json({message: `request does not contain ${requiredFields[i]}`});
+        }
+    }
     blogPost
-    .create(req.body) //find update method for mongoose
+    .create({
+        author: req.body.author,
+        title: req.body.title,
+        content: req.body.content
+    })
     .then(function(newPost){
-        res.json(newPost); //send client back created object
+        console.log(newPost);
+        res.status(201).json(newPost); //send client back created object
     })
     .catch(function(err){
         console.log(err);

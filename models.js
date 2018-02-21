@@ -19,6 +19,11 @@ blogSchema.virtual('fullName').get(function(){
     //mongoose will access "fullName property anytime fullName is called"
     const auth = this.author;
     return `${auth.firstName} ${auth.lastName}`;
+})
+.set(function(fullName){
+    const[first, last] = fullName.split(' ');
+    this.author.firstName = first;
+    this.author.lastName = last;
 });
 
 blogSchema.methods.apiReturn = function(){
