@@ -2,7 +2,7 @@
   "name": "mongoose-blog-api",
   "version": "1.0.0",
   "description": "Blog api to practice using MongoDB and Mongoose",
-  "main": "node server.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
